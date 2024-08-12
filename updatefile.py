@@ -4,8 +4,8 @@ from office365.runtime.auth.user_credential import UserCredential
 from office365.sharepoint.files.file import File
 
 def updatefile():
-    user_credentials = UserCredential(user_name=os.getenv('LOGIN'), password=os.getenv('SENHA'))
-    # ctx = ClientContext('https://engeselt.sharepoint.com/sites/Inovaesdeprocessos/Shared%20Documents/AUTOMAÇÃO%20DE%20PROCESSOS/Dashboard%20Licenciamento/ContratosTotais.xlsx').with_credentials(user_credentials)
+    user_credentials = UserCredential(os.getenv('LOGIN'),os.getenv('SENHA'))
+    ctx = ClientContext('https://engeselt.sharepoint.com/sites/Inovaesdeprocessos/Shared%20Documents/AUTOMAÇÃO%20DE%20PROCESSOS/Dashboard%20Licenciamento/ContratosTotais.xlsx').with_credentials(user_credentials)
 
     file_name = ('ContratosTotais.xlsx')
     with open(os.path.join(file_name), "wb") as local_file:
@@ -17,4 +17,4 @@ def updatefile():
         )
     print("Arquivo baixado")
 
-print(os.getenv('LOGIN'))
+updatefile()
