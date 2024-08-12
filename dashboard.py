@@ -12,7 +12,7 @@ from office365.sharepoint.files.file import File
 local = os.getcwd()
 
 def updatefile():
-    user_credentials = UserCredential(os.getenv('login'),os.getenv('senha'))
+    user_credentials = UserCredential(os.getenv('LOGIN'),os.getenv('SENHA'))
     ctx = ClientContext('https://engeselt.sharepoint.com/sites/Inovaesdeprocessos/Shared%20Documents/AUTOMAÇÃO%20DE%20PROCESSOS/Dashboard%20Licenciamento/ContratosTotais.xlsx').with_credentials(user_credentials)
 
     file_name = ('ContratosTotais.xlsx')
