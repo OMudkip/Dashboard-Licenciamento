@@ -25,8 +25,13 @@ jobs:
     - name: Add and commit changes
       run: |
       
-        git config user.email "andre.scavuzzi@gmail.com"
-        git config user.name "OMudkip"
+        git config --local user.email "andre.scavuzzi@gmail.com"
+        git config --local user.name "OMudkip"
         git add ContratosTotais.xlsx
         git commit -m "Update ContractsTotais.xlsx"
-        git push origin master
+        
+    - name: push changes
+      uses: ad-m/github-push-action@v0.6.0
+      with:
+        github_token: ${{ secrets.GIT_TOKEN}}
+        branc: main
