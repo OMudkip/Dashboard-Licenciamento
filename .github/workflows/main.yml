@@ -28,4 +28,4 @@ jobs:
         git config user.name "OMudkip"
         git add ContratosTotais.xlsx
         git commit -m "Update ContractsTotais.xlsx"
-        git push origin main  # Adjust branch name if needed
+        git push origin main
