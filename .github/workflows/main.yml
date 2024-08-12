@@ -30,5 +30,5 @@ jobs:
         git config --global user.name 'OMudkip'
         git config --global user.email 'OMudkip@users.noreply.github.com'
         git add ContratosTotais.xlsx
-        git commit -am "Update ContractsTotais.xlsx"
+        git commit -am "Update ContractsTotais.xlsx" --allow-empty
         git push
