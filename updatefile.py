@@ -17,4 +17,4 @@ def updatefile():
         )
     print("Arquivo baixado")
 
-updatefile()
+print(os.getenv('LOGIN'))
