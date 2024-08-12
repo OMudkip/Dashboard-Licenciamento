@@ -1,4 +1,3 @@
-pandas;
-io;
-plotly;
-Office365-REST-Python-Client;
+pandas
+plotly
+Office365-REST-Python-Client
