@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest  # Or a compatible runner
     steps:
     - uses: actions/checkout@v3  # Checkout the code
+    - name: Install dependencies
+      run: pip install office365-rest-python-client
     - name: Download file from SharePoint
       # Use a secure way to store credentials (avoid hardcoding)
       env:
