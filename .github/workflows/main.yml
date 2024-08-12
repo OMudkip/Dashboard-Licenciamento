@@ -18,10 +18,7 @@ jobs:
       run: pip install office365-rest-python-client
 
     - name: Download file from SharePoint
-      # Use a secure way to store credentials (avoid hardcoding)
-      env:
-        LOGIN: ${{ secrets.LOGIN }}
-        SENHA: ${{ secrets.SENHA }}  # Consider using a personal access token
+      # Use a secure way to store credentials (avoid hardcoding
       run: |
         python updatefile.py
 
@@ -31,5 +28,4 @@ jobs:
         git config --global user.email 'OMudkip@users.noreply.github.com'
         git add ContratosTotais.xlsx
         git commit -m "Update ContratosTotais.xlsx"
-        git branch -u origin/master
-        # git push origin main
+        git push origin main
