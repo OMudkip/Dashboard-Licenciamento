@@ -1,5 +1,5 @@
-pip install --upgrade pip;
-pip install pandas;
-pip install io;
-pip install plotly;
-pip install Office365-REST-Python-Client;
+--upgrade pip;
+pandas;
+io;
+plotly;
+Office365-REST-Python-Client;
