@@ -32,4 +32,5 @@ jobs:
         git pull
         git add ContratosTotais.xlsx
         git commit -m "Update ContratosTotais.xlsx"
-        git push origin main
+        git branch -u origin/master
+        # git push origin main
