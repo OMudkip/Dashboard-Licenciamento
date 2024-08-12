@@ -3,6 +3,9 @@ name: Update Contracts File
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   update_file:
     runs-on: ubuntu-latest  # Or a compatible runner
@@ -22,16 +25,10 @@ jobs:
       run: |
         python updatefile.py
 
-    - name: Add and commit changes
+    - name: Commit report
       run: |
-      
-        git config --local user.email "andre.scavuzzi@gmail.com"
-        git config --local user.name "OMudkip"
+        git config --global user.name 'OMudkip'
+        git config --global user.email 'OMudkip@users.noreply.github.com'
         git add ContratosTotais.xlsx
-        git commit -m "Update ContractsTotais.xlsx"
-        
-    - name: push changes
-      uses: ad-m/github-push-action@v0.6.0
-      with:
-        github_token: ${{ secrets.GIT_TOKEN}}
-        branc: main
+        git commit -am "Update ContractsTotais.xlsx"
+        git push
