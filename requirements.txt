@@ -1,0 +1,4 @@
+pandas
+io
+plotly
+Office365-REST-Python-Client
