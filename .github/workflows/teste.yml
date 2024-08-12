@@ -10,6 +10,7 @@ jobs:
   update_file:
     runs-on: ubuntu-latest  # Or a compatible runner
     steps:
+    - uses: actions/checkout@v3  # Checkout the code
     - name: Download file from SharePoint
       # Use a secure way to store credentials (avoid hardcoding)
       env:
