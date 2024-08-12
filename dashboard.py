@@ -5,26 +5,9 @@ import requests
 import os
 import plotly.graph_objects as go
 import plotly.express as px
-from office365.sharepoint.client_context import ClientContext
-from office365.runtime.auth.user_credential import UserCredential
-from office365.sharepoint.files.file import File
+
 
 local = os.getcwd()
-
-def updatefile():
-    user_credentials = UserCredential(os.getenv('LOGIN'),os.getenv('SENHA'))
-    ctx = ClientContext('https://engeselt.sharepoint.com/sites/Inovaesdeprocessos/Shared%20Documents/AUTOMAÇÃO%20DE%20PROCESSOS/Dashboard%20Licenciamento/ContratosTotais.xlsx').with_credentials(user_credentials)
-
-    file_name = ('ContratosTotais.xlsx')
-    with open(os.path.join(local, file_name), "wb") as local_file:
-        file = (
-            File.from_url('https://engeselt.sharepoint.com/sites/Inovaesdeprocessos/Shared%20Documents/AUTOMAÇÃO%20DE%20PROCESSOS/Dashboard%20Licenciamento/ContratosTotais.xlsx')
-            .with_credentials(user_credentials)
-            .download(local_file)
-            .execute_query()
-        )
-    print("Arquivo baixado")
-
 
 
 
@@ -149,8 +132,8 @@ with coluna1:
     st.markdown(f"<h1 style='text-align: center; color: white;'>{projeto}</h1>", unsafe_allow_html=True)
     st.markdown('')
     st.markdown('')
-if botao:
-    updatefile()
+# if botao:
+#     updatefile()
 
 
 df_filtrado = df_agrupado_sem_status[df_agrupado_sem_status['Contrato'].isin(contrato_selecionado)]
