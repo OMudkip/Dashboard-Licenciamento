@@ -2,6 +2,7 @@ import os
 from office365.sharepoint.client_context import ClientContext
 from office365.runtime.auth.user_credential import UserCredential
 from office365.sharepoint.files.file import File
+import git
 from git import Repo
 from github import Github
 
@@ -20,10 +21,14 @@ def updatefile():
         )
     print("Arquivo baixado")
 
-    repo = Repo("https://api.github.com/users/OMudkip/Dashboard-Licenciamento")
+    repo = Repo()
 
     # Adicionar o arquivo ao índice
-    repo.index.add([local_file])
+    file_path = local_file.name
+
+    # Adicionar o caminho do arquivo ao índice
+    repo.index.add([file_path])
+
 
     # Commitar as mudanças
     commit_message = f"Adicionando arquivo baixado do SharePoint: {file}"
@@ -34,7 +39,7 @@ def updatefile():
     g = Github("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")
 
     # Obter o repositório remoto
-    remote_url = "git@github.com:OMudkip/Dashboard-Licenciamento.git"  # Substitua com seu URL
+    remote_url = "https://github.com/OMudkip/Dashboard-Licenciamento"  # Substitua com seu URL
     origin = repo.remote(name="origin")
 
     # Verificar se a origem (remote) já está configurada
@@ -42,11 +47,12 @@ def updatefile():
       # Configurar a origem (remote) do repositório
       origin.set_url(remote_url)
 
-    # Puxar alterações (opcional)
-    origin.pull()
-
     # Empurrar alterações para o GitHub
-    origin.push()
+    try:
+      origin.push()
+      print("Alterações enviadas para o repositório remoto!")
+    except git.exc.GitCommandError as e:
+        print(f"Erro ao enviar alterações: {e}")
     print("Alterações enviadas para o repositório remoto!")
 
 updatefile()
