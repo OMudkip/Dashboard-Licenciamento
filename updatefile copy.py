@@ -48,15 +48,7 @@ def updatefile():
       origin.set_url(remote_url)
 
     # Empurrar alterações para o GitHub
-    try:
-        origin.push()
-        print("Alterações enviadas para o repositório remoto!")
-    except git.GitCommandError as e:
-        print(f"Erro ao enviar alterações: {e}")
-        if "Your local changes to the following files would be overwritten by merge" in str(e):
-            print("Há conflitos de mesclagem. Resolva-os manualmente.")
-        else:
-            print("Erro desconhecido. Verifique a sua conexão e as configurações do Git.")
-            # Adicionar lógica para lidar com outros tipos de erros, como enviar um email ou notificação
+    origin.push()
+    print("Alterações enviadas para o repositório remoto!")
 
 updatefile()
