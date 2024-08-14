@@ -1,3 +1,4 @@
+import git.exc
 import streamlit as st
 import pandas as pd
 import io
@@ -65,7 +66,12 @@ def updatefile():
     except:
         print('Não foi possivel dar Pull no repositório.')
     # Empurrar alterações para o GitHub
-    origin.push()
+    try:
+        origin.push()
+        print("Alterações enviadas para o repositório remoto!")
+    except git.exc.GitCommandError as e:
+        print(f"Erro ao enviar alterações: {e}")
+        print("Verifique se suas credenciais do GitHub estão configuradas corretamente.")
     print("Alterações enviadas para o repositório remoto!")
 
 
