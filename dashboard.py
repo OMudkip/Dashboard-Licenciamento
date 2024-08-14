@@ -8,8 +8,8 @@ import plotly.express as px
 from office365.sharepoint.client_context import ClientContext
 from office365.runtime.auth.user_credential import UserCredential
 from office365.sharepoint.files.file import File
-from git import Repo
 from github import Github
+import git
 
 
 local = os.getcwd()
@@ -28,7 +28,14 @@ def updatefile():
         )
     print("Arquivo baixado")
 
-    repo = Repo('https://github.com/OMudkip/Dashboard-Licenciamento.git')
+    try:
+        repo = git.Repo('https://github.com/OMudkip/Dashboard-Licenciamento.git')
+        # Resto do seu código
+    except git.exc.InvalidGitRepositoryError as e:
+        print(f"Erro ao inicializar o repositório Git: {e}")
+        print("Verifique se o caminho do repositório está correto e se o repositório existe.")
+    except PermissionError as e:
+        print(f"Você não tem permissão para acessar o repositório: {e}")
 
     # Adicionar o arquivo ao índice
     file_path = local_file.name
