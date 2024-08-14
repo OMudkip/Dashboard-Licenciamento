@@ -14,6 +14,52 @@ from github import Github
 
 local = os.getcwd()
 
+def updatefile():
+    user_credentials = UserCredential(os.environ.get('LOGIN'),os.environ.get('SENHA'))
+    ctx = ClientContext('https://engeselt.sharepoint.com/sites/Inovaesdeprocessos/Shared%20Documents/AUTOMAÇÃO%20DE%20PROCESSOS/Dashboard%20Licenciamento/ContratosTotais.xlsx').with_credentials(user_credentials)
+
+    file_name = ('ContratosTotais.xlsx')
+    with open(os.path.join(file_name), "wb") as local_file:
+        file = (
+            File.from_url('https://engeselt.sharepoint.com/sites/Inovaesdeprocessos/Shared%20Documents/AUTOMAÇÃO%20DE%20PROCESSOS/Dashboard%20Licenciamento/ContratosTotais.xlsx')
+            .with_credentials(user_credentials)
+            .download(local_file)
+            .execute_query()
+        )
+    print("Arquivo baixado")
+
+    repo = Repo()
+
+    # Adicionar o arquivo ao índice
+    file_path = local_file.name
+
+    # Adicionar o caminho do arquivo ao índice
+    repo.index.add([file_path])
+
+
+    # Commitar as mudanças
+    commit_message = f"Adicionando arquivo baixado do SharePoint: {file}"
+    repo.index.commit(commit_message)
+    print(f"Arquivo adicionado e commitado no repositório local com mensagem: {commit_message}")
+
+    # Autenticar com o GitHub
+    g = Github(os.environ.get('GIT_KEY'))
+
+    # Obter o repositório remoto
+    remote_url = "https://github.com/OMudkip/Dashboard-Licenciamento"  # Substitua com seu URL
+    origin = repo.remote(name="origin")
+
+    # Verificar se a origem (remote) já está configurada
+    if origin.url != remote_url:
+      # Configurar a origem (remote) do repositório
+      origin.set_url(remote_url)
+    try:
+        origin.pull()
+    except:
+        print('Não foi possivel dar Pull no repositório.')
+    # Empurrar alterações para o GitHub
+    origin.push()
+    print("Alterações enviadas para o repositório remoto!")
 
 
 st.set_page_config(layout='wide')
@@ -29,7 +75,7 @@ st.markdown("""<style>
 
 contratos_a_excluir = ['12061-63678','31369-64551','46185-57281','48082-39389','64382-87123','83945-04574','19263-91577','22852-58393','25326-33073','84654-96518','17370-45363','59844-82659','82175-06872']
 
-df = pd.read_excel('ContratosTotais.xlsx')
+df = pd.read_excel('ContratosTotais.xlsx', engine='openpyxl')
 for line in df.index:
     linhacontrato = df.loc[line, 'Contrato']
     if linhacontrato in contratos_a_excluir:
@@ -95,53 +141,6 @@ df_agrupado = df.groupby(['Contrato', 'Aplicação', 'Status']).size().reset_ind
 st.sidebar.image('logosoftwares.png')
 st.sidebar.markdown(f"<h1 style='text-align: left; color: white;'>Gerenciamento de Licenças</h1>", unsafe_allow_html=True)
 contrato_selecionado = st.sidebar.multiselect('Selecione um contrato', df['Contrato'].unique())
-
-def updatefile():
-    user_credentials = UserCredential(os.getenv("LOGIN"),os.getenv("SENHA"))
-    ctx = ClientContext('https://engeselt.sharepoint.com/sites/Inovaesdeprocessos/Shared%20Documents/AUTOMAÇÃO%20DE%20PROCESSOS/Dashboard%20Licenciamento/ContratosTotais.xlsx').with_credentials(user_credentials)
-
-    file_name = ('ContratosTotais.xlsx')
-    with open(os.path.join(file_name), "wb") as local_file:
-        file = (
-            File.from_url('https://engeselt.sharepoint.com/sites/Inovaesdeprocessos/Shared%20Documents/AUTOMAÇÃO%20DE%20PROCESSOS/Dashboard%20Licenciamento/ContratosTotais.xlsx')
-            .with_credentials(user_credentials)
-            .download(local_file)
-            .execute_query()
-        )
-    print("Arquivo baixado")
-
-    repo = Repo()
-
-    # Adicionar o arquivo ao índice
-    file_path = local_file.name
-
-    # Adicionar o caminho do arquivo ao índice
-    repo.index.add([file_path])
-
-
-    # Commitar as mudanças
-    commit_message = f"Adicionando arquivo baixado do SharePoint: {file}"
-    repo.index.commit(commit_message)
-    print(f"Arquivo adicionado e commitado no repositório local com mensagem: {commit_message}")
-
-    # Autenticar com o GitHub
-    g = Github(os.getenv('GIT_KEY'))
-
-    # Obter o repositório remoto
-    remote_url = "https://github.com/OMudkip/Dashboard-Licenciamento"  # Substitua com seu URL
-    origin = repo.remote(name="origin")
-
-    # Verificar se a origem (remote) já está configurada
-    if origin.url != remote_url:
-      # Configurar a origem (remote) do repositório
-      origin.set_url(remote_url)
-    try:
-        origin.pull()
-    except:
-        print('Não foi possivel dar Pull no repositório.')
-    # Empurrar alterações para o GitHub
-    origin.push()
-    print("Alterações enviadas para o repositório remoto!")
 
 
 if contrato_selecionado == ['17280-90655']:
