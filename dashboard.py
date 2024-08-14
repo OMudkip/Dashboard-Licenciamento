@@ -44,7 +44,7 @@ def updatefile():
     print(f"Arquivo adicionado e commitado no repositório local com mensagem: {commit_message}")
 
     # Autenticar com o GitHub
-    g = Github("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")
+    g = Github(os.getenv('GIT_KEY'))
 
     # Obter o repositório remoto
     remote_url = "https://github.com/OMudkip/Dashboard-Licenciamento"  # Substitua com seu URL
