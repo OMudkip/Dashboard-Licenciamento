@@ -29,7 +29,7 @@ def updatefile():
     print("Arquivo baixado")
 
     try:
-        repo = git.Repo('https://github.com/OMudkip/Dashboard-Licenciamento.git')
+        repo = git.Repo()
         # Resto do seu código
     except git.exc.InvalidGitRepositoryError as e:
         print(f"Erro ao inicializar o repositório Git: {e}")
