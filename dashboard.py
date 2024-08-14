@@ -75,8 +75,7 @@ st.markdown("""<style>
 
 contratos_a_excluir = ['12061-63678','31369-64551','46185-57281','48082-39389','64382-87123','83945-04574','19263-91577','22852-58393','25326-33073','84654-96518','17370-45363','59844-82659','82175-06872']
 
-caminho_arquivo = os.path.abspath('ContratosTotais.xlsx')
-df = pd.read_excel(caminho_arquivo)
+df = pd.read_excel('ContratosTotais.xlsx')
 for line in df.index:
     linhacontrato = df.loc[line, 'Contrato']
     if linhacontrato in contratos_a_excluir:
