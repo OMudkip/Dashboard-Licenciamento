@@ -42,7 +42,7 @@ def updatefile():
     file_path = local_file.name
 
     # Adicionar o caminho do arquivo ao índice
-    repo.index.add([file_path])
+    repo.index.add('ContratosTotais.xlsx')
 
 
     # Commitar as mudanças
