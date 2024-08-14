@@ -28,7 +28,7 @@ def updatefile():
         )
     print("Arquivo baixado")
 
-    repo = Repo()
+    repo = Repo('/OMudkip/Dashboard-Licenciamento')
 
     # Adicionar o arquivo ao índice
     file_path = local_file.name
